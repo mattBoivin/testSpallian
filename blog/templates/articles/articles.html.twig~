@@ -1,0 +1,55 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ parent() ~ "Articles" }}{% endblock %}
+
+{% block content %}
+    
+    {% for article in articles %}
+        
+        <div style="background-color:#DDD;margin-top:20px;">
+            <div style="float:left;background-color:inherit;">
+                From: {{ article.author }}
+            </div>
+            <div style="float:right;text-align:right;background-color:inherit;">
+                Date: {{ article.date|date('d-m-Y h:i:s') }}
+            </div>
+        </div>
+        
+        <div style="clear:both;text-align: center;">
+            <h1>
+                <a href="{{ path('detail_article', {'id': article.id}) }}">{{ article.title }}</a>
+                
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="suparticle" data="{{ article.id }}" href="#"><img src={{ asset("images/effacer.png") }} width=20 height=20 /></a>
+                {% endif %}
+            </h1>
+        </div>
+        <hr />
+        
+    {% endfor %}
+    
+    <div style="text-align: center;">
+        <a class="addarticle" href="{{ path('add_article') }}"><img src={{ asset("images/add.jpeg") }} width=20 height=20 /></a>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function(){
+            $('.suparticle').click(function() {
+                $.ajax({
+                    type: "DELETE",
+                    url: "{{ path('delete_article') }}",
+                    data: {'id': $(this).attr('data')},
+                    success: function(data) {
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ parent() ~ "Articles" }}{% endblock %}
+
+{% block content %}
+    <div style="padding-left: 40%;">
+        {{ form(form) }}
+    </div>
+    
+    <div style="text-align: center;">
+        <a href="{{ path('articles') }}"><img src={{ asset("images/accueil.png") }} width=20 height=20 /></a>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

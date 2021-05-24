@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ parent() ~ "Articles" }}{% endblock %}
+
+{% block content %}
+        <div style="background-color:#DDD;margin-top:20px;">
+            <div style="float:left;background-color:inherit;">
+                From: {{ article.author }}
+            </div>
+            <div style="float:right;text-align:right;background-color:inherit;">
+                Date: {{ article.date|date('d-m-Y h:i:s') }}
+            </div>
+        </div>
+        <div style="clear:both;text-align: center;">
+            <h1>
+                {{ article.title }}
+                <a href="{{ path('edit_article', {'id': article.id}) }}"><img src={{ asset("images/edit.png") }} width=20 height=20 /></a>
+            </h1>
+            {% if article.subtitle %}
+                <h4>
+                    {{ article.subtitle }}
+                </h4>
+            {% endif %}
+            <p>
+                {{ article.content }}
+            </p>
+        </div>
+{% endblock %}
